@@ -8,17 +8,20 @@ import java.util.concurrent.BlockingQueue;
 
 class ClientHandler implements Runnable {
 
+    private String username;
     BlockingQueue<String> sendQueue;
     private PrintWriter pw;
     Socket socket;
+    ChatServer chatServer;
 
     //Provides each instance with a unique id. Simulates the unique userid we will need for the chat-server
     private static int id = 0;
 
-    public ClientHandler(Socket s, BlockingQueue<String> sendQueue) {
+    public ClientHandler(Socket s, BlockingQueue<String> sendQueue, ChatServer chatServer) {
         this.socket = s;
         this.id++;
         this.sendQueue = sendQueue;
+        this.chatServer = chatServer;
     }
 
     public String getId() {
@@ -39,7 +42,7 @@ class ClientHandler implements Runnable {
         }
     }
 
-    private boolean handleCommand(String message, PrintWriter pw) {
+    private boolean handleCommand(String message, PrintWriter pw) throws InterruptedException {
         String[] parts = message.split("#");
         System.out.println("Size: " + parts.length);
         if (parts.length == 1) {
@@ -51,9 +54,32 @@ class ClientHandler implements Runnable {
         } else if (parts.length == 2) {
             String token = parts[0];
             String param = parts[1];
+
+            if(username == null){
+                //TODO CONNECT METODE
+                if(token.equals("CONNECT")){
+
+                }
+                else{
+                    //TODO SMID FEJL
+                }
+            }
+
             switch (token) {
                 case "ALL":
                     sendToAll(param);
+                    break;
+                case "CONNECT":
+                    if (ChatServer.users.containsKey(param)){
+                        username = param;
+                        chatServer.addToClientHandler(username,this);
+                        chatServer.sendTasks.put(chatServer.showOnlineUsers());
+                    }
+                    else
+                    {
+                        pw.println("CLOSE#2");
+                        return false;
+                    }
                     break;
                 default:
                     throw new IllegalArgumentException("Sent request does not obey the protocol");
