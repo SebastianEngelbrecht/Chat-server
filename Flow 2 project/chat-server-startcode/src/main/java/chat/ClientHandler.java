@@ -22,6 +22,10 @@ class ClientHandler implements Runnable{
     }
 
     public void sendToThisClient(String msg){
+        if (msg.equals("CLOSE#2")){
+            closeStatus = 2;
+            return;
+        }
         pw.println(msg);
     }
 
@@ -45,6 +49,7 @@ class ClientHandler implements Runnable{
                     chatServer.sendToAll(userName + "," +message);
                 } else  {
                     chatServer.sendToSingleClient(userName + "," + receivers + "," + message);
+                    System.out.println("send to single client string: "+userName + "," + receivers + "," + message);
                 }
             }
 

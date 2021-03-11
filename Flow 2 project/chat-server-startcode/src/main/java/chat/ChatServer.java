@@ -24,6 +24,13 @@ class ChatServer {
         allChatUsers.put("Sebastian","Sebastian");
         allChatUsers.put("Tobias","Tobias");
         allChatUsers.put("Lars","Lars");
+        allChatUsers.put("Muslim","Muslim");
+        allChatUsers.put("Edvard","Edvard");
+        allChatUsers.put("Arkadii","Arkadii");
+        allChatUsers.put("Lonardi","Lonardi");
+        allChatUsers.put("Kris","Kris");
+        allChatUsers.put("Tommy","Tommy");
+        allChatUsers.put("Mila","Mila");
     }
 
     public static boolean doesUserExist(String user){
@@ -69,16 +76,32 @@ class ChatServer {
     }
 
     public void sendToSingleClient(String msg) throws IOException {
-        String messageString = "MESSAGE#";
         String[] parts = msg.split(",");
-        if (parts.length >= 3){
-            for (ClientHandler tmp : allClientHandlers.values()) {
-                for(int i = 1 ; i < parts.length ; i++) {
-                    if (tmp.getUserName().equals(parts[i])) {
-                        tmp.sendToThisClient(messageString + parts[0] + "#" + parts[parts.length - 1]);
 
+        if (parts.length >= 3){
+
+            //Used to send to specific users
+            ClientHandler clientHandler;
+            boolean usersFound = false;
+            int receivers = parts.length - 2;
+            for (String tmp:allClientHandlers.keySet()) {
+
+                for (int i = 1; i < parts.length-1; i++) {
+                    if (parts[i].equals(tmp)){
+                        clientHandler = allClientHandlers.get(tmp);
+                        clientHandler.sendToThisClient("MESSAGE#"+parts[0]+"#"+parts[3]);
+                        receivers--;
+                        if (receivers == 0) {
+                            usersFound = true;
+                        }
                     }
                 }
+
+            }
+            if (usersFound == false) {
+                ClientHandler client = allClientHandlers.get(parts[0]);
+                client.sendToThisClient("CLOSE#2");
+                throw new IllegalArgumentException("User not found");
             }
         }
     }

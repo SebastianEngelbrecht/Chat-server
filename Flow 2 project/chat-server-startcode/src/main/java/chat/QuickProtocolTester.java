@@ -20,7 +20,7 @@ public class QuickProtocolTester {
     private void testConnectOK() throws IOException {
         initializeAll();
         System.out.println("TEST1 (Connecting with an existing user)");
-        pw.println("CONNECT#Peter");
+        pw.println("CONNECT#Mila");
         String response = scanner.nextLine();
         System.out.println(response);
         // pw.println("CLOSE#");
@@ -38,10 +38,10 @@ public class QuickProtocolTester {
     private void testSendToSingleClient() throws IOException {
         initializeAll();
         System.out.println("TEST3 (Sending message to a single client)");
-        pw.println("CONNECT#Tobias");
+        pw.println("CONNECT#Edvard");
         String response = scanner.nextLine();
         System.out.println(response);
-        pw.println("SEND#Tobias#Hej Tobias");
+        pw.println("SEND#Edvard#Hej Tobias");
         String response1 = scanner.nextLine();
         System.out.println(response1);
         pw.println("SEND#Tobias#Hej Peter");
@@ -60,7 +60,7 @@ public class QuickProtocolTester {
 
     public static void main(String[] args) throws IOException, InterruptedException {
         new QuickProtocolTester().testSendToSingleClient();
-        //new QuickProtocolTester().testConnectOK();
+        new QuickProtocolTester().testConnectOK();
 
         // new QuickProtocolTester().testConnectWrongUser();
     }
