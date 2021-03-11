@@ -89,7 +89,7 @@ class ChatServer {
                 for (int i = 1; i < parts.length-1; i++) {
                     if (parts[i].equals(tmp)){
                         clientHandler = allClientHandlers.get(tmp);
-                        clientHandler.sendToThisClient("MESSAGE#"+parts[0]+"#"+parts[3]);
+                        clientHandler.sendToThisClient("MESSAGE#"+parts[0]+"#"+parts[parts.length-1]);
                         receivers--;
                         if (receivers == 0) {
                             usersFound = true;
