@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Chat-server.iml" filepath="$PROJECT_DIR$/.idea/Chat-server.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Flow 2 project/chat-server-startcode/echo_classdemo.iml" filepath="$PROJECT_DIR$/Flow 2 project/chat-server-startcode/echo_classdemo.iml" />
+    </modules>
+  </component>
+</project>
